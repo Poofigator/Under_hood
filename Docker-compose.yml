@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3.3"
 
 services:
   web:
@@ -12,12 +12,16 @@ services:
     volumes:
      - ./:/app
     depends_on:
-      - postgresql
+      - postgresdb
   
-  postgresql:
-    image: postgres 
+  postgredb:
+    build:
+      context: ./docker/postgres
+      dockerfile: Dockerfile
     environment: 
-     - POSTGRES_PASSWORD=password 
+     - POSTGRES_PASSWORD=password
+    volumes:
+      - ./docker/postgres/init.psql:/docker-enrtypoint-initdb.d/init.sql
     ports: 
      - "5432:5432"
 
@@ -28,5 +32,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    volumes:
+      - ./static/:/static
     depends_on:
+      - postgresdb
       - web
