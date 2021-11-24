@@ -5,23 +5,24 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    ports: 
-     - "8000:8000" 
     entrypoint: 
      - ./entrypoint.sh
     volumes:
      - ./:/app
+     - ./:/usr/src/app
     depends_on:
       - postgresdb
+    ports:
+      - "8000:8000"
   
-  postgredb:
+  postgresdb:
     build:
-      context: ./docker/postgres
+      context: ./postgres
       dockerfile: Dockerfile
     environment: 
-     - POSTGRES_PASSWORD=password
+     - POSTGRES_PASSWORD=admin
     volumes:
-      - ./docker/postgres/init.psql:/docker-enrtypoint-initdb.d/init.sql
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports: 
      - "5432:5432"
 
