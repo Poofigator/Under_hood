@@ -9,7 +9,6 @@ services:
      - ./entrypoint.sh
     volumes:
      - ./:/app
-     - ./:/usr/src/app
     depends_on:
       - postgresdb
     ports:
@@ -19,8 +18,11 @@ services:
     build:
       context: ./postgres
       dockerfile: Dockerfile
-    environment: 
-     - POSTGRES_PASSWORD=admin
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: prod_db
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
     volumes:
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports: 
