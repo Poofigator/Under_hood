@@ -6,4 +6,4 @@ class Car(models.Model):
     place = models.CharField(max_length=255)
 
     def __str__(self):
-        return  "Машина с номером {} находится на {}".format(self.number, self.place)
+        return "Машина с номером {} находится на {}".format(self.number, self.place)

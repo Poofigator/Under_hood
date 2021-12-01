@@ -8,8 +8,6 @@ class CarViewSet(viewsets.ModelViewSet):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
 
-    def filter_queryset(self, queryset):
-        return queryset.filter(**self.request.data)
-
     def get_queryset(self):
-        return Car.objects.filter(number=self.request.data.get('number'))
+        res = Car.objects.filter(number=self.request.query_params.get('number'))
+        return res
