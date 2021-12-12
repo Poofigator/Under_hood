@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import environ 
 
-env = environ.Env()
+env = environ.Env(DEBUG=(bool, False), )
 environ.Env.read_env('.env')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,9 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("SECRET_KEY")
+#  SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = 'django-insecure-p+xi0bsi$8jf!%whj%e4)x*l2n3vin!5iew8lq$3-d(-7#*-=^'
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = env("DEBUG")
+#  DEBUG = env('DEBUG')
 DEBUG = False
 
 ALLOWED_HOSTS = ['*']
@@ -139,3 +140,9 @@ STATIC_ROOT = BASE_DIR / 'static'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}

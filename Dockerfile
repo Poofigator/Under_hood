@@ -7,16 +7,19 @@ WORKDIR /app
 
 RUN apk --update add
 RUN apk add gcc libc-dev libffi-dev zlib-dev
-RUN apk add postgresql-dev 
+RUN apk add postgresql-dev
 
 RUN pip install --upgrade pip
 
 COPY ./requirements.txt .
 COPY ./entrypoint.sh .
+COPY ./cronScript.sh /etc/periodic/daily
+
+RUN chmod +x entrypoint.sh
+RUN chmod +x /etc/periodic/daily/cronScript.sh
 
 RUN pip install -r requirements.txt
 
-RUN chmod +x entrypoint.sh
 
 COPY . .
 
